@@ -48,7 +48,7 @@ const TodosTable = () => {
               <td>{item.name}</td>
               <td>
                 <div className="btns">
-                <Link to={`/edit/${item.id}`}>
+                <Link to={`/todo-list/edit/${item.id}`}>
                   <button 
                   title="Редактировать" 
                   className="btn btn-edit"
