@@ -15,7 +15,7 @@ const EditForm = () => {
     const onSubmit = (event:React.FormEvent<HTMLFormElement>) =>{
         event.preventDefault()
         dispatch(updateTodo({id:Number(id),name:editName}))
-        navigate("/")
+        navigate("/todo-list/")
     }
   return (
     <form onSubmit={onSubmit} className="editform">

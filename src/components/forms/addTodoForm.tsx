@@ -13,7 +13,7 @@ const AddTodoForm = () => {
           id:Date.now(), 
           name:name, 
           completed:false}))
-        navigate("/")
+        navigate("/todo-list/")
     }
   return (
     <form onSubmit={onSubmit} className="addform">

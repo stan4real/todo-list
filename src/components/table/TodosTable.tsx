@@ -14,7 +14,7 @@ const TodosTable = () => {
   return (
     <div className="container">
       <div className="header-btns">
-      <Link to='/create'>
+      <Link to='/todo-list/create'>
         <button className="btn-add">
           Добавить...
         </button>
