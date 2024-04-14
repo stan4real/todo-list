@@ -3,12 +3,12 @@ import { useAppSelector,useAppDispatch } from "../../redux/hooks"
 import { deleteTodo, toggleStatus } from "../../redux/slices/crudTodoSlice"
 import './TodosTable.css'
 import { Link } from "react-router-dom"
-import { useState } from "react"
+
 
 const TodosTable = () => {
   const todo = useAppSelector(state => state.todos)
   const dispatch = useAppDispatch()
-  const [selectedFilter,setSelectedFilter] = useState('default')
+  //const [selectedFilter,setSelectedFilter] = useState('default')
 
 
   return (
@@ -19,7 +19,7 @@ const TodosTable = () => {
           Добавить...
         </button>
       </Link>
-      <select 
+      {/* <select 
         value={selectedFilter}
         onChange={(event) => {
           setSelectedFilter(event.target.value)
@@ -27,7 +27,7 @@ const TodosTable = () => {
         <option value='true'>Complete</option>
         <option value="false">Incomplete</option>
         <option value="all">All</option>
-      </select> 
+      </select>  */}
       </div>
       { todo.length ? 
         <table className="table">
