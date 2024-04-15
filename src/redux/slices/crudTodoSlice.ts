@@ -49,7 +49,6 @@ export const todoSlice = createSlice({
                 editTodo.name = name
             }
         },
-        
     }
 })
 
