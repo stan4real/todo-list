@@ -1,9 +1,9 @@
 import { Pencil, ToggleLeft, Trash2 } from "lucide-react"
 import { useAppSelector,useAppDispatch } from "../../redux/hooks"
-import { deleteTodo, toggleStatus } from "../../redux/slices/crudTodoSlice"
+import { TodoState, deleteTodo, toggleStatus } from "../../redux/slices/crudTodoSlice"
 import './TodosTable.css'
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import useFilter from "../../hooks/useFilter"
 
 const TodosTable = () => {
@@ -11,7 +11,21 @@ const TodosTable = () => {
   const dispatch = useAppDispatch()
   const [selectedFilter,setSelectedFilter] = useState('all')
   const filteredData = useFilter(selectedFilter, todo)
+  const [todoList, setTodoList] = useState<TodoState[]>(filteredData)
+  const dragPerson = useRef<number>(0)
+  const draggedOverPerson = useRef<number>(0)
 
+  useEffect(() => {
+  setTodoList(filteredData)
+}, [filteredData])
+
+  function handleSort (){
+    const todosClone = [...todoList]
+    const temp = todosClone[dragPerson.current]
+    todosClone[dragPerson.current] = todosClone[draggedOverPerson.current]
+    todosClone[draggedOverPerson.current] = temp
+    setTodoList(todosClone)
+  }
   return (
     <div className="container">
       <div className="header-btns">
@@ -25,25 +39,30 @@ const TodosTable = () => {
         onChange={(event) => {
           setSelectedFilter(event.target.value)
           }}>
-        <option value='true'>Complete</option>
-        <option value="false">Incomplete</option>
-        <option value="all">All</option>
+        <option value='true'>Выполненные</option>
+        <option value="false">Не выполненные</option>
+        <option value="all">Все</option>
       </select>  
       </div>
       { todo.length ? 
         <table className="table">
             <thead>
-                <tr>
+                <tr >
                     <th>№</th>
                     <th style={{minWidth:200}}>Название</th>
                     <th></th>
                 </tr>
             </thead>
         <tbody>
-          {filteredData.map((item,index) => (
+          {todoList.map((item,index) => (
             <tr 
             key={item.id}
             draggable={true}
+            onDragStart={() => dragPerson.current = index}
+            onDragEnter={() => draggedOverPerson.current = index}
+            onDragEnd={handleSort}
+            onDragOver={(e) => e.preventDefault()}
+            
             className={item.completed ? 'completed' : 'default'}>
               <td>{index+1}</td>
               <td>{item.name}</td>
